@@ -11,6 +11,8 @@ def fetch_historical_data(symbol, start_date, end_date):
         data = ticker.history(start=start_date, end=end_date)
         if data.empty:
             raise ValueError("No data fetched for the given date range.")
+        # Drop rows with NaN values
+        data = data.dropna()
         return data[['Open', 'Close', 'High', 'Low']]
     except Exception as e:
         st.error(f"Error fetching historical data: {e}")
